@@ -22,6 +22,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<a href="users/login">Login</a>
 		</li>
 	</ul>
+	<div>
+	<?php
+	$exeq = $this->db->get("users");
+	$data = $exeq->result();
+var_dump($data);
+	?>
+	</div>
 </div>
 
 </body>
