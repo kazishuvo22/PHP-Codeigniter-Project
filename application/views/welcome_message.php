@@ -22,14 +22,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<a href="users/login">Login</a>
 		</li>
 	</ul>
+
 	<div>
-	<?php
-	$exeq = $this->db->get("users");
-	$data = $exeq->result();
-var_dump($data);
+		<form action="welcome_message.php" method="post">
+		id: <input type="text" name="id" value="id"><br>
+		<input type="submit" value="go">
+		</form>
+
+<?php
+		$this->db->where('id=id');
+// here we select every column of the table
+	$q = $this->db->get('users');
+	$data = $q->result_array();
+
+	echo($data[0]['id']);
+	echo "<br>";
+	echo($data[0]['uname']);
+	echo "<br>";
+	echo($data[0]['email']);
+	echo "<br>";
+	echo($data[0]['cr']);
+	echo "<br>";
+	echo "Database connected Sucessfully";
 	?>
 	</div>
-</div>
+	
+	</div>
 
 </body>
 </html>

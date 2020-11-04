@@ -14,4 +14,8 @@ class Users extends CI_Controller {
 	{
 		$this->load->view('user/login');
 	}
+	public function view()
+	{
+		$this->load->view('welcome_v');
+	}
 }
