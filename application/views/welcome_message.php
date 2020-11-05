@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<h1>Welcome to First problem!</h1>
 	<ul>
 		<li>
-			<a href="users/">User Home page</a>
+			<a href="users/homepage">User Home page</a>
 		</li>
 		<li>
 			<a href="users/registration">Registration</a>
@@ -22,29 +22,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<a href="users/login">Login</a>
 		</li>
 	</ul>
+<div>
+	<?php
 
-	<div>
-		<form action="welcome_message.php" method="post">
-		id: <input type="text" name="id" value="id"><br>
-		<input type="submit" value="go">
-		</form>
-
-<?php
-		$this->db->where('id=id');
+		$this->db->where('id','1');
 // here we select every column of the table
-	$q = $this->db->get('users');
-	$data = $q->result_array();
+		$q = $this->db->get('userdetail');
+		$data = $q->result_array();
 
-	echo($data[0]['id']);
-	echo "<br>";
-	echo($data[0]['uname']);
-	echo "<br>";
-	echo($data[0]['email']);
-	echo "<br>";
-	echo($data[0]['cr']);
-	echo "<br>";
-	echo "Database connected Sucessfully";
-	?>
+		echo($data[0]['id']);
+		echo "<br>";
+		echo($data[0]['uname']);
+		echo "<br>";
+		echo($data[0]['name']);		
+		echo "<br>";
+		echo($data[0]['bdate']);
+		echo "<br>";
+		echo "Database connected Sucessfully";
+		?>
 	</div>
 	
 	</div>
