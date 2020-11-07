@@ -1,19 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<title>Welcome to First problem</title>
-	<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/css/design.css">
 </head>
 <body>
-
-<div id="container">
+	<div class="container">
+    <div class="jumbotron">
+        <div id="container">
 	<h1>Welcome to First problem!</h1>
 	<ul>
 		<li>
-			<a href="users/homepage">User Home page</a>
+			<a href="users/index">User Home page</a>
 		</li>
 		<li>
 			<a href="users/registration">Registration</a>
@@ -22,10 +23,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<a href="users/login">Login</a>
 		</li>
 	</ul>
+
 <div>
 	<?php
 
-		$this->db->where('id','1');
+		$this->db->where('id','2');
 // here we select every column of the table
 		$q = $this->db->get('userdetail');
 		$data = $q->result_array();
@@ -34,15 +36,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		echo "<br>";
 		echo($data[0]['uname']);
 		echo "<br>";
-		echo($data[0]['name']);		
-		echo "<br>";
-		echo($data[0]['bdate']);
+		echo($data[0]['address']);		
 		echo "<br>";
 		echo "Database connected Sucessfully";
 		?>
 	</div>
 	
 	</div>
+</div></div>
+
+
+
 
 </body>
 </html>
+

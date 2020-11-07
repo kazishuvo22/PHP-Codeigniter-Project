@@ -1,56 +1,55 @@
-<?php
-class User_model extends CI_model{
- 
- 
- 
-public function register_user($user){
- 
- 
-$this->db->insert('user', $user);
- 
-}
- 
-public function register_user2($userdetail){
- 
- 
-$this->db->insert('userdetail', $userdetail);
- 
-}
-public function login_user(){
- //$email,$pass
-  $this->db->select('*');
-  $this->db->from('user');
- // $this->db->where('user_email',$email);
- // $this->db->where('user_password',$pass);
- 
-  if($query=$this->db->get())
-  {
-      return $query->result_array();
-  }
-  else{
-    return false;
-  }
- 
- 
-}
-public function email_check($email){
- 
-  $this->db->select('*');
-  $this->db->from('user');
-  $this->db->where('email',$email);
-  $query=$this->db->get();
- 
-  if($query->num_rows()>0){
-    return false;
-  }else{
-    return true;
-  }
- 
-}
- 
- 
-}
+<?php 
 
- 
- 
-?>
+class User_model extends CI_Model {
+
+    protected $User_table_name = "user";
+    protected $User_table_name2 = "userdetail";
+
+    /**
+     * Insert User Data in Database
+     * @param: {array} userData
+     */
+    public function insert_user($userData) {
+        return $this->db->insert($this->User_table_name, $userData);
+    }
+    public function insert_user2($userData) {
+        return $this->db->insert($this->User_table_name2, $userData);
+    }
+
+
+    /**
+     * Check User Login in Database
+     * @param: {array} userData
+     */
+    public function check_login($userData) {
+
+        /**
+         * First Check Email is Exists in Database
+         */
+        $query = $this->db->get_where($this->User_table_name, array('email' => $userData['email']));
+        if ($this->db->affected_rows() > 0) {
+
+            $password = $query->row('md5_pw');
+
+            /**
+             * Check Password Hash 
+             */
+            if (password_verify($userData['password'], $password) === TRUE) {
+
+                /**
+                 * Password and Email Address Valid
+                 */
+                return [
+                    'status' => TRUE,
+                    'data' => $query->row(),
+                ];
+
+            } else {
+                return ['status' => FALSE,'data' => FALSE];
+            }
+
+        } else {
+            return ['status' => FALSE,'data' => FALSE];
+        }
+    }
+}

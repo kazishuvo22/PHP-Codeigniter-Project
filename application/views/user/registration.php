@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+
+    <!-- Include Flash Data File -->
+    <?php $this->load->view('_FlashAlert\flash_alert.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,16 +16,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   </head>
   <body>
+  	<div class="container">
+    <div class="jumbotron">
+    <div id="container">
   	<h2> Registration Page</h2>
-	<div class="container"><!-- container class is used to centered  the body of the browser with some decent width-->
-      <div class="row">
 		<li>
-			<a href="re_student">Registration for student</a>
+			<a href="re_student"><b>Registration for student</b></a>
 		</li>
 		<li>
-			<a href="re_teacher">Registration for teacher</a>
+			<a href="re_teacher"><b>Registration for teacher</b></a>
 		</li>
 	</div>
+</div>
 </div>
   </body>
 </html>
