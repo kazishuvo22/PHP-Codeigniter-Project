@@ -1,3 +1,6 @@
+<div class="container">
+    <div class="jumbotron">
+        <div id="container">
 <h1><center>Login</center></h1>
 <div class="container">
 
@@ -22,3 +25,7 @@
         <button type="submit" class="btn btn-primary">Login</button>
     <?= form_close() ?>
 </div>
+</div>
+</div>
+</div>
+<br>

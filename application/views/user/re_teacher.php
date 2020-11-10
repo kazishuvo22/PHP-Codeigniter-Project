@@ -1,3 +1,6 @@
+<div class="container">
+    <div class="jumbotron">
+        <div id="container">
 <h1><center>Teacher Registration</center></h1>
 <div class="container">
 
@@ -62,5 +65,8 @@
         </div>
         <button type="submit" class="btn btn-primary">Register</button>
     <?= form_close() ?>
+</div>
+</div>
+</div>
 </div>
 <br>

@@ -26,7 +26,9 @@ class User_model extends CI_Model {
         /**
          * First Check Email is Exists in Database
          */
+        
         $query = $this->db->get_where($this->User_table_name, array('email' => $userData['email']));
+        $query2 = $this->db->get_where($this->User_table_name2, array('email' => $userData['email']));
         if ($this->db->affected_rows() > 0) {
 
             $password = $query->row('md5_pw');
@@ -42,8 +44,8 @@ class User_model extends CI_Model {
                 return [
                     'status' => TRUE,
                     'data' => $query->row(),
+                    'data2'=>$query2->row(),
                 ];
-
             } else {
                 return ['status' => FALSE,'data' => FALSE];
             }

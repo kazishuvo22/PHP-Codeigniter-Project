@@ -26,20 +26,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div>
 	<?php
-
-		$this->db->where('id','2');
 // here we select every column of the table
+	$data = '';
+		$p = $this->db->get('user');
 		$q = $this->db->get('userdetail');
-		$data = $q->result_array();
+		if($q && $p)
+		{
+			$data = $q->result_array();
 
-		echo($data[0]['id']);
+
+		/*echo($data[0]['id']);
 		echo "<br>";
 		echo($data[0]['uname']);
 		echo "<br>";
 		echo($data[0]['address']);		
-		echo "<br>";
+		echo "<br>";*/
+		
 		echo "Database connected Sucessfully";
+
+		}
+		
 		?>
+
+
 	</div>
 	
 	</div>

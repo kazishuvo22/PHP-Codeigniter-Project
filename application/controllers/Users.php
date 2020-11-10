@@ -64,7 +64,7 @@ class Users extends CI_Controller {
                     'USERNAME'  => $result['data']->uname,
                     'USER_EMAIL' => $result['data']->email,
                     'IS_ACTIVE'  => $result['data']->valid,
-                    'Designation' => $result['data']->designation,
+                    'Designation' => $result['data2']->designation,
                 );
                 
                 $this->session->set_userdata($session_array);
@@ -122,6 +122,10 @@ class Users extends CI_Controller {
                 'valid' => $this->input->post('valid', TRUE),
                 'md5_pw' => password_hash($this->input->post('password', TRUE), PASSWORD_DEFAULT),
                 'cdate' => $this->input->post('cdate', TRUE));
+             $insert_data2 = array(
+                'uname' => $this->input->post('username', TRUE),
+                'email' => $this->input->post('email', TRUE),
+                'designation'=>"Student");
                 
 
             /**
@@ -129,12 +133,12 @@ class Users extends CI_Controller {
              */
             $this->load->model('User_model', 'UserModel');
             $result = $this->UserModel->insert_user($insert_data);
+            $result2 = $this->UserModel->insert_user2($insert_data2);
 
-            if ($result == TRUE) {
+            if ($result && $result2 == TRUE) {
 
                 $this->session->set_flashdata('success_flashData', 'You have registered successfully.');
-                echo "successfully inserted";
-               // redirect('Users/registration');
+               redirect('Users/login');
 
             } else {
 
@@ -181,6 +185,7 @@ class Users extends CI_Controller {
                 'cdate' => $this->input->post('cdate', TRUE));
             $insert_data2 = array(
             	'uname' => $this->input->post('username', TRUE),
+                'email' => $this->input->post('email', TRUE),
                 'address' => $this->input->post('address', TRUE),
                 'designation' => $this->input->post('designation', TRUE),
                 'phone' => $this->input->post('phone', TRUE),
@@ -192,14 +197,13 @@ class Users extends CI_Controller {
              */
             $this->load->model('User_model', 'UserModel');
             $result = $this->UserModel->insert_user($insert_data);
-            $this->load->model('User_model', 'UserModel');
-            $result = $this->UserModel->insert_user2($insert_data2);
+            $result2 = $this->UserModel->insert_user2($insert_data2);
 
-            if ($result == TRUE) {
+            if ($result && $result2 == TRUE) {
 
                 $this->session->set_flashdata('success_flashData', 'You have registered successfully.');
                 echo "successfully inserted";
-               // redirect('Users/registration');
+                redirect('Users/login');
 
             } else {
 
