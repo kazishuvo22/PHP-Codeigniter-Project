@@ -10,6 +10,8 @@ class Users extends CI_Controller {
   	 		$this->load->model('User_model');
         $this->load->library('session');
         $this->form_validation->set_error_delimiters('<p class="invalid-feedback">', '</p>');
+        $this->load->library('user_agent');
+
 
 }
 
@@ -69,6 +71,20 @@ class Users extends CI_Controller {
                 
                 $this->session->set_userdata($session_array);
 
+                /*Here session data saved to the database //user_session*/
+                $user_session = array(
+                'user_id' => $result['data']->id,
+                'session_id'=>session_id(),
+                'ipaddress'=> $_SERVER['REMOTE_ADDR'],
+                'browser'=>$agent = $this->agent->browser().' '.$this->agent->version(),
+                'os'=>$agent = $this->agent->platform(),
+
+                );
+                $this->session->set_userdata($user_session);
+                $this->load->model('User_model', 'UserModel');
+                $result = $this->UserModel->session_insert($user_session);
+
+                //Login message
                 $this->session->set_flashdata('success_flashData', 'Login Success');
                 redirect('Users/panel');
 

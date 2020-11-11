@@ -4,7 +4,7 @@ class User_model extends CI_Model {
 
     protected $User_table_name = "user";
     protected $User_table_name2 = "userdetail";
-
+    protected $User_table_name3 = "user_session";
     /**
      * Insert User Data in Database
      * @param: {array} userData
@@ -14,6 +14,9 @@ class User_model extends CI_Model {
     }
     public function insert_user2($userData) {
         return $this->db->insert($this->User_table_name2, $userData);
+    }
+    public function session_insert($session) {
+        return $this->db->insert($this->User_table_name3, $session);
     }
 
 
