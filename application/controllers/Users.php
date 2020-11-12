@@ -200,6 +200,7 @@ class Users extends CI_Controller {
                 'md5_pw' => password_hash($this->input->post('password', TRUE), PASSWORD_DEFAULT),
                 'cdate' => $this->input->post('cdate', TRUE));
             $insert_data2 = array(
+                'name' => $this->input->post('full_name', TRUE),
             	'uname' => $this->input->post('username', TRUE),
                 'email' => $this->input->post('email', TRUE),
                 'address' => $this->input->post('address', TRUE),
@@ -251,8 +252,8 @@ class Users extends CI_Controller {
      */
     public function panel() {
 
-        if (empty($this->session->userdata('id'))) {
-           // redirect('user/login');
+        if (empty($this->session->userdata('email'))) {
+            //redirect('users/login');
         }
 
         $data['page_title'] = "Welcome to User Panel";
@@ -273,5 +274,6 @@ class Users extends CI_Controller {
 
         redirect('Users/index');
     }
+
 	
 }

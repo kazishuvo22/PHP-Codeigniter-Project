@@ -5,6 +5,7 @@ class User_model extends CI_Model {
     protected $User_table_name = "user";
     protected $User_table_name2 = "userdetail";
     protected $User_table_name3 = "user_session";
+    protected $User_table_name4 = "user_activity";
     /**
      * Insert User Data in Database
      * @param: {array} userData

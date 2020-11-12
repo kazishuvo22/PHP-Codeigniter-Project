@@ -5,13 +5,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to First problem</title>
+	<title>VIS problem homepage</title>
 </head>
 <body>
 	<div class="container">
     <div class="jumbotron">
         <div id="container">
-	<h1>Welcome to First problem!</h1>
+	<h1>Welcome to VIS problem!</h1>
 	<ul>
 		<li>
 			<a href="users/index">User Home page</a>
