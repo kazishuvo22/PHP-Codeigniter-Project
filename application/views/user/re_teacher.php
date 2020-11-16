@@ -49,6 +49,14 @@
             <?= form_error('district'); ?>            
         </div>
         <div class="form-group">
+            <label>Gender</label><br>
+            <select name="gender">
+            <option class="form-control" value="Male">Male</option>
+            <option class="form-control" value="Female">Female</option>
+            <option class="form-control" value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
             <label>Designation</label>
             <input type="text" name="designation" value="<?= set_value('designation'); ?>" class="form-control <?= (form_error('designation') == "" ? '':'is-invalid') ?>" placeholder="Enter Designation"> 
             <?= form_error('designation'); ?>            

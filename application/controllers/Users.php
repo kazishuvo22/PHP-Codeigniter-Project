@@ -20,7 +20,7 @@ class Users extends CI_Controller {
 	public function index()
 	{
 
-		$data['page_title'] = "User Registration";
+		$data['page_title'] = "Homepage";
         $this->load->view('_Layout/home/header.php', $data); // Header File
         $this->load->view("user/homepage");
         $this->load->view('_Layout/home/footer.php'); // Footer File
@@ -141,7 +141,9 @@ class Users extends CI_Controller {
              $insert_data2 = array(
                 'uname' => $this->input->post('username', TRUE),
                 'email' => $this->input->post('email', TRUE),
-                'designation'=>"Student");
+                'designation'=>"Student",
+                'gender' => $this->input->post('gender', TRUE),
+                );
                 
 
             /**
@@ -206,7 +208,9 @@ class Users extends CI_Controller {
                 'address' => $this->input->post('address', TRUE),
                 'designation' => $this->input->post('designation', TRUE),
                 'phone' => $this->input->post('phone', TRUE),
-                'district' => $this->input->post('district', TRUE));
+                'district' => $this->input->post('district', TRUE),
+                'gender' => $this->input->post('gender', TRUE),
+            );
                 
 
             /**
@@ -274,6 +278,14 @@ class Users extends CI_Controller {
 
         redirect('Users/index');
     }
+    public function test()
+    {
+        $data['page_title'] = "Test Page";
+        $this->load->view('_Layout/home/header.php', $data); // Header File
+        $this->load->view("user/test");
+        $this->load->view('_Layout/home/footer.php'); // Footer File
 
+
+    }
 	
 }

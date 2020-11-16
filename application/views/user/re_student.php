@@ -39,6 +39,14 @@
             <?= form_error('passconf'); ?> 
         </div>
         <div class="form-group">
+            <label>Gender</label><br>
+            <select name="gender">
+            <option class="form-control" value="Male">Male</option>
+            <option class="form-control" value="Female">Female</option>
+            <option class="form-control" value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
             <label>Date</label>
             <input type="date" name="cdate" value="<?= set_value('date'); ?>" class="form-control <?= (form_error('date') == "" ? '':'is-invalid') ?>">  
             <?= form_error('cdate'); ?>           

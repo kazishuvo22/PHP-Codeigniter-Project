@@ -26,25 +26,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 	</div>
 </div></div>
-<script>
-                        $(document).ready(function() {
-                          var start = new Date();
-
-                          $window.unload(function() {
-                              var end = new Date();
-                              $.ajax({ 
-                                url: current_url(),
-                                data: {'timeSpent': end - start},
-                                async: false
-                              })
-                           });
-                        });
-
-
-                        </script>
 
 
 
-</body>
 </html>
 

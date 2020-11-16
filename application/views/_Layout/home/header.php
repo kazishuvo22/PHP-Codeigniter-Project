@@ -23,16 +23,19 @@
             <div class="form-inline my-2 my-lg-0">
                 <?php if (!empty($this->session->userdata('USER_ID')) && $this->session->userdata('USER_ID') > 0) { ?>
                     <!-- User isLogin -->
-                    <a href="<?= base_url('Users/Panel') ?>" class="btn btn-primary my-2 my-sm-0">User Panel</a> &nbsp;
-                    <a href="<?= base_url('Users/logout') ?>" class="btn btn-danger my-2 my-sm-0">Logout</a>
+                    <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+                    </form>&nbsp;
+                    <a href="<?= base_url('Users/Panel') ?>" class="btn btn-outline-primary my-2 my-sm-0">User Panel</a> &nbsp;
+                    <a href="<?= base_url('Users/logout') ?>" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
 
                     <p>
                         <?php  
-                       /* $this->load->helper('url');
-                        $this->db->where($this->session->userdata('session_id'),session_id());
+                        /*$this->load->helper('url');
+                        $this->db->where("session_id",session_id());
                         $this->db->select('id');
-                       res = $this->db->get('user_session');*/
-            
+                       $res = $this->db->get('user_session');*/
 
                         $url = array(
                             'id' => session_id(),
@@ -51,8 +54,42 @@
 
                 <?php } else { ?>
                     <!-- User not Login -->
-                    <a href="<?= base_url('Users/registration') ?>" class="btn btn-primary my-2 my-sm-0">Register</a> &nbsp;
-                    <a href="<?= base_url('Users/login') ?>" class="btn btn-success my-2 my-sm-0">Login</a>
+                    <p>
+                    <?php 
+                    $user_session = array(
+                    'session_id'=>session_id(),
+                    'ipaddress'=> $_SERVER['REMOTE_ADDR'],
+                    'browser'=>$agent = $this->agent->browser().' '.$this->agent->version(),
+                    'os'=>$agent = $this->agent->platform());
+
+                    if($user_session['session_id'] && session_id() == false)
+                    {
+
+                    $this->db->insert('user_session', $user_session);
+                }
+
+                ?>
+                    </p>
+
+                    <p>
+                        <?php  
+
+                        $url = array(
+                            'id' => session_id(),
+                            'pageurl' => current_url(),
+                            'title'=>$page_title,
+                        );
+
+                        $this->db->insert('user_activity', $url);
+                        ?>
+                    </p>
+
+                    <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form> &nbsp;
+                    <a href="<?= base_url('Users/registration') ?>" class="btn btn-outline-primary my-2 my-sm-0">Register</a> &nbsp;
+                    <a href="<?= base_url('Users/login') ?>" class="btn btn-outline-warning my-2 my-sm-0">Login</a>
                 <?php } ?>
             </div>
         </div>

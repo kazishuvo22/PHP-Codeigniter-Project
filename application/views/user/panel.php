@@ -4,9 +4,18 @@
     <?php $this->load->view('_FlashAlert\flash_alert.php') ?>
     <div class="jumbotron">
     	<h3>Control Panel</h3>
-    </div>
-    
-    <div class="jumbotron">
+
+    <ul>
+        <li>
+            <a href="index">User Home page</a>
+        </li>
+        <li>
+            <a href="registration">Registration</a>
+        </li>
+        <li>
+            <a href="login">Login</a>
+        </li>
+    </ul>
         <h3 class="display-4">Welcome to <?= $this->session->userdata('USER_NAME') ?></h3>
         <hr class="my-4">
         <h5 class="display-6">Email :  <?= $this->session->userdata('USER_EMAIL') ?></h5>
@@ -16,7 +25,6 @@
         <h5 class="display-6">Browser: <?= $this->session->userdata('browser') ?></h5>
         <h5 class="display-6">Operating System: <?= $this->session->userdata('os') ?></h5>
     </div>
-</div>
 
-        
+   
 </div>
