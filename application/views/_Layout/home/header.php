@@ -29,21 +29,58 @@
                     </form>&nbsp;
                     <a href="<?= base_url('Users/Panel') ?>" class="btn btn-outline-primary my-2 my-sm-0">User Panel</a> &nbsp;
                     <a href="<?= base_url('Users/logout') ?>" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
-
                     <p>
+                        <!-- if session is logged in, then data pass to database here(user_session) -->
+                        <?php
+
+                            $get_session_id = $this->db->get_where('user_session', array('session_id'=>session_id()));
+                            $session_id = $get_session_id->row('session_id');
+
+                            /*Here session data saved to the database //user_session*/
+
+                            if(session_id() != $session_id){
+                            $user_session = array(
+                            'user_id'=>$this->session->userdata('USER_ID'),
+                            'session_id'=>session_id(),
+                            'ipaddress'=> $_SERVER['REMOTE_ADDR'],
+                            'browser'=>$agent = $this->agent->browser().' '.$this->agent->version(),
+                            'os'=>$agent = $this->agent->platform());
+                            $this->db->insert('user_session', $user_session);
+                        }
+
+                        /* if session is logged in, then data pass to database here(user_activity)*/
+                        $get_id = $this->db->get_where('user_session', array('session_id'=>session_id()));
+                        $sid = $get_id->row('id');
+
+                        $get = $this->db->get_where('user_activity', array('id'=>$sid,'pageurl'=>current_url(),'title'=>$page_title)); // checking if entity exist.
+                        $res = $get->row('numbers_time'); // collecting results.
+
+                        if($get->num_rows()>0){  // checking condition by row count
+                            $count = $res + 1;
+                            $this->db->where(array('id'=>$sid));
+                            $this->db->update('user_activity', array('numbers_time'=>$count)); // Updating the existing entity. 
+                        }
+                        else {
+                            // insert entity using insert query
+
+                            $url = array(
+                            'id' => $sid,
+                            'pageurl' => current_url(),
+                            'title'=>$page_title,
+                        );
+
+                        $this->db->insert('user_activity', $url);
+                        }
+
+                        ?>
+                    </p>
                         <?php  
                         /*$this->load->helper('url');
                         $this->db->where("session_id",session_id());
                         $this->db->select('id');
                        $res = $this->db->get('user_session');*/
 
-                        $url = array(
-                            'id' => session_id(),
-                            'pageurl' => current_url(),
-                            'title'=>$page_title,
-                        );
-
-                        $this->db->insert('user_activity', $url);
+                        
                         ?>
                     </p>
                     <p>
@@ -55,32 +92,46 @@
                 <?php } else { ?>
                     <!-- User not Login -->
                     <p>
-                    <?php 
-                    $user_session = array(
-                    'session_id'=>session_id(),
-                    'ipaddress'=> $_SERVER['REMOTE_ADDR'],
-                    'browser'=>$agent = $this->agent->browser().' '.$this->agent->version(),
-                    'os'=>$agent = $this->agent->platform());
+                        <!-- if session not logged in, then data pass to database here(user_session) -->
+                        <?php
 
-                    if($user_session['session_id'] && session_id() == false)
-                    {
+                            $get_session_id = $this->db->get_where('user_session', array('session_id'=>session_id()));
+                            $session_id = $get_session_id->row('session_id');
 
-                    $this->db->insert('user_session', $user_session);
-                }
+                            /*Here session data saved to the database //user_session*/
 
-                ?>
-                    </p>
+                            if(session_id() != $session_id){
+                            $user_session = array(
+                            'session_id'=>session_id(),
+                            'ipaddress'=> $_SERVER['REMOTE_ADDR'],
+                            'browser'=>$agent = $this->agent->browser().' '.$this->agent->version(),
+                            'os'=>$agent = $this->agent->platform());
+                            $this->db->insert('user_session', $user_session);
+                        }
+                        /* if session is not logged in, then data pass to database here(user_activity)*/
+                        $get_id = $this->db->get_where('user_session', array('session_id'=>session_id()));
+                        $sid = $get_id->row('id');
 
-                    <p>
-                        <?php  
+                        $get = $this->db->get_where('user_activity', array('id'=>$sid,'pageurl'=>current_url(),'title'=>$page_title)); // checking if entity exist.
+                        $res = $get->row('numbers_time'); // collecting results.
 
-                        $url = array(
-                            'id' => session_id(),
+                        if($get->num_rows()>0){  // checking condition by row count
+                            $count = $res + 1;
+                            $this->db->where(array('id'=>$sid));
+                            $this->db->update('user_activity', array('numbers_time'=>$count)); // Updating the existing entity. 
+                        }
+                        else {
+                            // insert entity using insert query
+
+                            $url = array(
+                            'id' => $sid,
                             'pageurl' => current_url(),
                             'title'=>$page_title,
                         );
 
                         $this->db->insert('user_activity', $url);
+                        }
+
                         ?>
                     </p>
 
