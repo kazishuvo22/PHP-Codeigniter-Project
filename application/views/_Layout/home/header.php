@@ -46,7 +46,10 @@
                             'browser'=>$agent = $this->agent->browser().' '.$this->agent->version(),
                             'os'=>$agent = $this->agent->platform());
                             $this->db->insert('user_session', $user_session);
+
+                            $this->session->set_userdata($user_session);
                         }
+
 
                         /* if session is logged in, then data pass to database here(user_activity)*/
                         $get_id = $this->db->get_where('user_session', array('session_id'=>session_id()));

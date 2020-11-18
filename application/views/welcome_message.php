@@ -43,6 +43,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		echo "<br>";*/
 		
 		echo "Database connected Sucessfully";
+		echo " ";
+		echo time();
 
 		}
 		
@@ -53,6 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 	</div>
 </div></div>
+
 
 
 
