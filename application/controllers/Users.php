@@ -275,5 +275,20 @@ class Users extends CI_Controller {
 
 
     }
+
+     public function set_active_time() {
+        //getdatafromajaxcall
+        $active_time = $this->input->post('timeSpentOnSite');
+        $this->db->insert('user_activity',$active_time);
+        //query to match id & url
+        $this->db->where('id', $id);
+        $this->db->where('pageurl', $pageurl);
+        $query1 = $this->db->get('user_activity');
+        //update database active time
+            $this->db->set('active_time', "active_time+'$active_time'", FALSE);
+            $this->db->where('id', $id);
+            $this->db->where('pageurl', $pageurl);
+            $this->db->update('user_activity');
+    }
 	
 }

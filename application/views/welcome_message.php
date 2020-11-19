@@ -44,8 +44,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 		echo "Database connected Sucessfully";
 		echo " ";
-		echo time();
+		
+		date_default_timezone_set('Asia/Dhaka');
 
+		$now = date('Y-m-d H:i:s');
+
+		echo $now;
 		}
 		
 		?>

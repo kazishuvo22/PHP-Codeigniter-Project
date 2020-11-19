@@ -7,7 +7,52 @@
     <title><?= $page_title ?></title>
     <link rel="stylesheet" href="<?= base_url("assets/css/bootstrap.min.css"); ?>">
     <script src="<?= base_url("assets/js/jquery-3.3.1.slim.min.js"); ?>"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+
+    <script>
+    var timer;
+    var timeStart;
+    var timeSpentOnSite = getTimeSpentOnSite();
+    var id = "<?php echo $this->session->userdata('id');?>";
+    var pageurl = "<?php echo current_url();?>";
+
+    function getTimeSpentOnSite() {
+        timeSpentOnSite = parseInt(timeSpentOnSite);
+        timeSpentOnSite = isNaN(timeSpentOnSite) ? 0 : timeSpentOnSite;
+        return timeSpentOnSite;
+    }
+
+    function start_timer() {
+        timerStart = Date.now();
+        timer = setInterval(function () {
+            timeSpentOnSite = getTimeSpentOnSite() + (Date.now() - timerStart);
+            timerStart = parseInt(Date.now());
+        }, 1000);
+    }
+
+    function set_active_time() {
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('users/set_active_time') ?>",
+            dataType: "json",
+            data: {
+                //pageurl: pageurl,
+                timeSpentOnSite: timeSpentOnSite,
+            },
+            success: function (data) {
+                alert("I got a view");
+            }
+        });
+
+
+    }
+
+</script>    
+
+
 </head>
+<body onload="start_timer()" onbeforeunload="set_active_time()">
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">e-Learing Research and Development Lab</a>
@@ -31,6 +76,7 @@
                     <a href="<?= base_url('Users/logout') ?>" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
                     <p>
                         <!-- if session is logged in, then data pass to database here(user_session) -->
+
                         <?php
 
                             $get_session_id = $this->db->get_where('user_session', array('session_id'=>session_id()));
@@ -54,6 +100,9 @@
                         /* if session is logged in, then data pass to database here(user_activity)*/
                         $get_id = $this->db->get_where('user_session', array('session_id'=>session_id()));
                         $sid = $get_id->row('id');
+                        date_default_timezone_set('Asia/Dhaka');
+
+                        $datetime = date('Y-m-d H:i:s');
 
                         $get = $this->db->get_where('user_activity', array('id'=>$sid,'pageurl'=>current_url(),'title'=>$page_title)); // checking if entity exist.
                         $res = $get->row('numbers_time'); // collecting results.
@@ -70,6 +119,7 @@
                             'id' => $sid,
                             'pageurl' => current_url(),
                             'title'=>$page_title,
+                            'request_datetime'=> $datetime,
                         );
 
                         $this->db->insert('user_activity', $url);
@@ -97,6 +147,10 @@
                     <p>
                         <!-- if session not logged in, then data pass to database here(user_session) -->
                         <?php
+
+                        date_default_timezone_set('Asia/Dhaka');
+
+                        $datetime = date('Y-m-d H:i:s');
 
                             $get_session_id = $this->db->get_where('user_session', array('session_id'=>session_id()));
                             $session_id = $get_session_id->row('session_id');
@@ -130,6 +184,7 @@
                             'id' => $sid,
                             'pageurl' => current_url(),
                             'title'=>$page_title,
+                            'request_datetime'=> $datetime,
                         );
 
                         $this->db->insert('user_activity', $url);
