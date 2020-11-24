@@ -8,52 +8,10 @@
     <link rel="stylesheet" href="<?= base_url("assets/css/bootstrap.min.css"); ?>">
     <script src="<?= base_url("assets/js/jquery-3.3.1.slim.min.js"); ?>"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-
-    <script>
-    var timer;
-    var timeStart;
-    var timeSpentOnSite = getTimeSpentOnSite();
-    var id = "<?php echo $this->session->userdata('id');?>";
-    var pageurl = "<?php echo current_url();?>";
-
-    function getTimeSpentOnSite() {
-        timeSpentOnSite = parseInt(timeSpentOnSite);
-        timeSpentOnSite = isNaN(timeSpentOnSite) ? 0 : timeSpentOnSite;
-        return timeSpentOnSite;
-    }
-
-    function start_timer() {
-        timerStart = Date.now();
-        timer = setInterval(function () {
-            timeSpentOnSite = getTimeSpentOnSite() + (Date.now() - timerStart);
-            timerStart = parseInt(Date.now());
-        }, 1000);
-    }
-
-    function set_active_time() {
-
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('users/set_active_time') ?>",
-            dataType: "json",
-            data: {
-                //pageurl: pageurl,
-                timeSpentOnSite: timeSpentOnSite,
-            },
-            success: function (data) {
-                alert("I got a view");
-            }
-        });
-
-
-    }
-
-</script>    
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
 <body onload="start_timer()" onbeforeunload="set_active_time()">
-<body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">e-Learing Research and Development Lab</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,7 +67,7 @@
 
                         if($get->num_rows()>0){  // checking condition by row count
                             $count = $res + 1;
-                            $this->db->where(array('id'=>$sid));
+                            $this->db->where(array('id'=>$sid, 'pageurl'=>current_url(),'title'=>$page_title));
                             $this->db->update('user_activity', array('numbers_time'=>$count)); // Updating the existing entity. 
                         }
                         else {
@@ -123,6 +81,7 @@
                         );
 
                         $this->db->insert('user_activity', $url);
+                        $this->session->set_userdata($url);
                         }
 
                         ?>
@@ -164,6 +123,7 @@
                             'browser'=>$agent = $this->agent->browser().' '.$this->agent->version(),
                             'os'=>$agent = $this->agent->platform());
                             $this->db->insert('user_session', $user_session);
+                            $this->session->set_userdata($user_session);
                         }
                         /* if session is not logged in, then data pass to database here(user_activity)*/
                         $get_id = $this->db->get_where('user_session', array('session_id'=>session_id()));
@@ -174,7 +134,7 @@
 
                         if($get->num_rows()>0){  // checking condition by row count
                             $count = $res + 1;
-                            $this->db->where(array('id'=>$sid));
+                            $this->db->where(array('id'=>$sid, 'pageurl'=>current_url(),'title'=>$page_title));
                             $this->db->update('user_activity', array('numbers_time'=>$count)); // Updating the existing entity. 
                         }
                         else {
@@ -188,6 +148,7 @@
                         );
 
                         $this->db->insert('user_activity', $url);
+                        $this->session->set_userdata($url);
                         }
 
                         ?>

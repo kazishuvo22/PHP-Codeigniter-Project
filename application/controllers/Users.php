@@ -55,6 +55,8 @@ class Users extends CI_Controller {
 
             if (!empty($result['status']) && $result['status'] === TRUE) {
 
+                session_regenerate_id();
+
                 /**
                  * Create Session
                  * -----------------
@@ -263,6 +265,7 @@ class Users extends CI_Controller {
          */
         $remove_sessions = array('USER_ID', 'USERNAME','USER_EMAIL','IS_ACTIVE', 'USER_NAME');
         $this->session->unset_userdata($remove_sessions);
+        $this->session->sess_destroy();
 
         redirect('Users/index');
     }
@@ -278,8 +281,9 @@ class Users extends CI_Controller {
 
      public function set_active_time() {
         //getdatafromajaxcall
+        $id = $this->input->post('id');
+        $pageurl = $this->input->post('pageurl');
         $active_time = $this->input->post('timeSpentOnSite');
-        $this->db->insert('user_activity',$active_time);
         //query to match id & url
         $this->db->where('id', $id);
         $this->db->where('pageurl', $pageurl);
